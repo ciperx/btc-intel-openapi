@@ -1,0 +1,435 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "BTC-Intel \u2014 Stacks & Bitcoin Market Intelligence",
+  "version": "1.0.0",
+  "description": "Live Stacks/Bitcoin market intelligence for AI agents. Pay-per-call via x402 (0.001 STX); tokens accepted: STX, sBTC, USDCx. Every paid endpoint returns JSON.",
+  "contact": {
+   "name": "Inner Ozma",
+   "url": "https://github.com/ciperx"
+  },
+  "license": {
+   "name": "MIT"
+  }
+ },
+ "servers": [
+  {
+   "url": "https://x402.ggez.my.id",
+   "description": "Production"
+  }
+ ],
+ "tags": [
+  {
+   "name": "free"
+  },
+  {
+   "name": "market"
+  },
+  {
+   "name": "fees"
+  },
+  {
+   "name": "deps"
+  }
+ ],
+ "paths": {
+  "/health": {
+   "get": {
+    "operationId": "getHealth",
+    "tags": [
+     "free"
+    ],
+    "summary": "Health probe",
+    "description": "Free liveness probe.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "status": {
+           "type": "string"
+          },
+          "service": {
+           "type": "string"
+          },
+          "timestamp": {
+           "type": "string"
+          },
+          "network": {
+           "type": "string"
+          }
+         }
+        },
+        "example": {
+         "status": "ok",
+         "service": "btc-intel",
+         "timestamp": "2026-10-22T04:50:05.450Z",
+         "network": "mainnet"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "security": []
+   }
+  },
+  "/pox": {
+   "get": {
+    "operationId": "getPox",
+    "tags": [
+     "market"
+    ],
+    "summary": "PoX cycle",
+    "description": "Live Stacks PoX cycle: stacked ustx, threshold, next cycle, blocks to phases.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        },
+        "example": {
+         "error": "HTTP Error 402: Payment Required"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/fees": {
+   "get": {
+    "operationId": "getFees",
+    "tags": [
+     "fees"
+    ],
+    "summary": "Fee tiers",
+    "description": "Bitcoin fee tiers plus Stacks mempool fee recommendations.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        },
+        "example": {
+         "error": "HTTP Error 402: Payment Required"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/market": {
+   "get": {
+    "operationId": "getMarket",
+    "tags": [
+     "market"
+    ],
+    "summary": "Spot market",
+    "description": "STX/BTC/USD spot, STX-BTC ratio, sats-per-STX.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        },
+        "example": {
+         "error": "HTTP Error 402: Payment Required"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sbtc": {
+   "get": {
+    "operationId": "getSbtc",
+    "tags": [
+     "market"
+    ],
+    "summary": "sBTC supply",
+    "description": "sBTC total supply on Stacks.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        },
+        "example": {
+         "error": "HTTP Error 402: Payment Required"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/dep-versions": {
+   "get": {
+    "operationId": "getDepVersions",
+    "tags": [
+     "deps"
+    ],
+    "summary": "Dependency versions",
+    "description": "Latest version and release metadata for npm/PyPI packages.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [
+     {
+      "name": "packages",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string"
+      },
+      "description": "Comma-separated package names",
+      "example": "react,zod"
+     },
+     {
+      "name": "ecosystem",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "enum": [
+        "npm",
+        "pypi",
+        "auto"
+       ]
+      },
+      "example": "npm"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        },
+        "example": {
+         "error": "HTTP Error 402: Payment Required"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pkg-health": {
+   "get": {
+    "operationId": "getPkgHealth",
+    "tags": [
+     "deps"
+    ],
+    "summary": "Dependency health",
+    "description": "Stale/deprecated/outdated verdict for a dependency list.\n\nPaid via x402 (0.001 STX per call) except /health.",
+    "parameters": [
+     {
+      "name": "packages",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string"
+      },
+      "description": "Comma-separated name[@version]",
+      "example": "react@18.2.0,lodash"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        },
+        "example": {
+         "error": "HTTP Error 402: Payment Required"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment required (x402). Send X-PAYMENT header.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "error": {
+           "type": "string"
+          },
+          "accepts": {
+           "type": "array",
+           "items": {
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "securitySchemes": {
+   "x402": {
+    "type": "apiKey",
+    "in": "header",
+    "name": "X-PAYMENT",
+    "description": "x402 payment payload (base64 JSON) for 0.001 STX per call."
+   }
+  }
+ },
+ "security": [
+  {
+   "x402": []
+  }
+ ]
+}
